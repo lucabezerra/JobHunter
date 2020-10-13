@@ -68,12 +68,15 @@ const CustomSelect = styled.select`
 const Search = () => {
   const [locationsList, setLocationsList] = useState([]);
   const [descriptionsList, setDescriptionsList] = useState([]);
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState([]);
+  const [searchHistory, setSearchHistory] = useState([]);
+  const [nextPage, setNextPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
   const locationSelect = useRef(null);
   const descriptionSelect = useRef(null);
   let resultString = null;
+  const resultsPerPage = 49;  // actually 50
 
   useEffect(() => {
     fetch('http://localhost:8000/jobs/')
@@ -92,14 +95,21 @@ const Search = () => {
   const onChange = () => {
     const location = locationSelect.current.value;
     const description = descriptionSelect.current.value;
-    const qs = querystring.stringify({ location, description })
+    const qs = querystring.stringify({ location, description, page: nextPage });
+
+    setSearchHistory(searchHistory + [location, description]);
     setLoading(true);
-    setResults(null);
+    setResults([]);
     setError(null);
     fetch(`http://localhost:8000/jobs/search?${qs}`)
       .then(response => {
         response.json().then(responseData => {
           setResults(responseData.results);
+          if (responseData.results.length > resultsPerPage) {
+            setNextPage(Number.parseInt(responseData.page) + 1);
+          } else {
+            setNextPage(1);
+          }
           setLoading(false);
         });
       }).catch(err => {
@@ -113,6 +123,8 @@ const Search = () => {
   } else if (error) {
     console.log(error);
     resultString = <ResultsSummary color="indianred">An error happened, please try again.</ResultsSummary>;
+  } else if (searchHistory.length > 0 && results.length === 0) {
+    resultString = <ResultsSummary color="lightgoldenrodyellow">No results found.</ResultsSummary>;
   }
 
   return (
@@ -130,7 +142,7 @@ const Search = () => {
             </CustomSelect>
           </div>
           <div>
-            <b>Language:</b>{' '}
+            <b>Description:</b>{' '}
             <CustomSelect ref={descriptionSelect} onChange={onChange}>
               <option disabled selected value=""></option>
               {descriptionsList.map(desc => <option key={desc}>{desc}</option>)}
@@ -140,13 +152,14 @@ const Search = () => {
       </Header>
       {resultString}
       <ResultsList>
-        {results && results.map((item, i) => (
-          <>
-            <ResultItem key={item.id} item={item} />
+        {results.map((item, i) => (
+          <React.Fragment key={item.id}>
+            <ResultItem item={item} />
             {i !== results.length - 1 ? <br /> : null}
-          </>
+          </React.Fragment>
         ))}
       </ResultsList>
+      {results.length > resultsPerPage && <Button text="Next Page" onClick={onChange} />}
     </Container>
   );
 }

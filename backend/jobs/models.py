@@ -46,4 +46,4 @@ class SearchRecord(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     description = models.CharField(choices=DESCRIPTION_CHOICES, max_length=20)
     location = models.CharField(choices=LOCATION_CHOICES, max_length=20)
-    ip_address = models.GenericIPAddressField()
+    ip_address = models.GenericIPAddressField(null=True, blank=True)

@@ -2,6 +2,7 @@ import json
 import requests
 
 from django.http import JsonResponse
+from ipware import get_client_ip
 
 from .models import SearchRecord
 
@@ -9,20 +10,29 @@ from .models import SearchRecord
 def search(request):
     description = request.GET.get('description')
     location = request.GET.get('location')
-    page = request.GET.get('page')
+    page = request.GET.get('page', 1)
+
+    ip, is_routable = get_client_ip(request)
+
+    SearchRecord.objects.create(
+        description=description,
+        location=location,
+        ip_address=ip,
+    )
+
     query_string = {}
     if description:
         query_string['description'] = description
     if location:
         query_string['location'] = location
-    if page:
+    if page and (description or location):
         query_string['page'] = page
 
     response = requests.get(
         'https://jobs.github.com/positions.json',
         params=query_string,
     )
-    return JsonResponse({'results': response.json()})
+    return JsonResponse({'results': response.json(), 'page': page})
 
 
 def populate_frontend(request):
