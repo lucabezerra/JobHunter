@@ -41,10 +41,16 @@ const SearchContainer = styled.div`
   margin-top: 15px;
   align-self: center;
   display: flex;
-  justify-content: space-between;
-  width: 50%;
+  flex-direction: column;
+  justify-content: middle;
   line-height: 3em;
   font-size: 18px;
+
+  @media (min-width: 1024px) {
+    justify-content: space-between;
+    width: 60%;
+    flex-direction: row;
+  }
 `;
 
 const ResultsSummary = styled.div`

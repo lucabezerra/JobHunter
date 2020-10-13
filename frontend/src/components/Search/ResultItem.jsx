@@ -10,7 +10,7 @@ import './style.css';
 const Container = styled.div`
   margin: 5px 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-self: center;
   border-bottom: 1px solid black;
   padding-bottom: 20px;
@@ -18,6 +18,10 @@ const Container = styled.div`
 
   &:last-of-type {
     border: none;
+  }
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
   }
 `;
 
