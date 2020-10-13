@@ -12,7 +12,7 @@ def search(request):
     location = request.GET.get('location')
     page = request.GET.get('page', 1)
 
-    ip, is_routable = get_client_ip(request)
+    ip, _ = get_client_ip(request)
 
     SearchRecord.objects.create(
         description=description,

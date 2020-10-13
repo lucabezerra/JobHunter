@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import querystring from 'query-string';
 
 import Button from '../Button';
+import Footer from '../Footer';
 import ResultItem from './ResultItem';
 
 const Container = styled.div`
@@ -143,14 +144,14 @@ const Search = () => {
           <div>
             <b>Location:</b>{' '}
             <CustomSelect ref={locationSelect} onChange={onChange}>
-              <option disabled selected value=""></option>
+              <option value=""></option>
               {locationsList.map(loc => <option key={loc}>{loc}</option>)}
             </CustomSelect>
           </div>
           <div>
             <b>Description:</b>{' '}
             <CustomSelect ref={descriptionSelect} onChange={onChange}>
-              <option disabled selected value=""></option>
+              <option value=""></option>
               {descriptionsList.map(desc => <option key={desc}>{desc}</option>)}
             </CustomSelect>
           </div>
@@ -166,6 +167,7 @@ const Search = () => {
         ))}
       </ResultsList>
       {results.length > resultsPerPage && <Button text="Next Page" onClick={onChange} />}
+      <Footer />
     </Container>
   );
 }

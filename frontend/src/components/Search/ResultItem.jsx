@@ -64,12 +64,12 @@ const ResultItem = ({ item }) => {
     <Container>
       <CustomUL>
         <CustomLI>
-          <a href={item.company_url} target="_blank">
+          <a href={item.company_url} rel="noopener">
             <Logo src={item.company_logo} />
           </a>
         </CustomLI>
         <CustomLI><b>Company:</b> {item.company}</CustomLI>
-        <CustomLI><b>Title:</b> <a href={item.url} target="_blank">{item.title}</a></CustomLI>
+        <CustomLI><b>Title:</b> <a href={item.url} rel="noopener">{item.title}</a></CustomLI>
         <CustomLI><b>Type:</b> {item.type}</CustomLI>
         <CustomLI><b>Publication Date:</b> {item.created_at}</CustomLI>
         <CustomLI><b>Location:</b> {item.location}</CustomLI>
