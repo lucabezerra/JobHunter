@@ -1,0 +1,11 @@
+--2020-10-12 22:19:56--  https://jobs.github.com/positions.json?description=python
+Resolving jobs.github.com (jobs.github.com)... 140.82.114.22
+Connecting to jobs.github.com (jobs.github.com)|140.82.114.22|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/json]
+Saving to: ‘positions.json?description=python’
+
+             positions.js     [<=>                                  ]       0  --.-KB/s               positions.json?descriptio     [ <=>                                 ] 169.11K  --.-KB/s    in 0.09s   
+
+2020-10-12 22:19:57 (1.94 MB/s) - ‘positions.json?description=python’ saved [173165]
+

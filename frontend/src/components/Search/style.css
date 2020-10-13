@@ -1,0 +1,10 @@
+.read-more {
+  font-style: italic;
+  cursor: pointer;
+  color: rgb(0, 0, 238);
+  font-weight: bold;
+}
+
+.read-more:hover {
+  color: #3e7ac2;
+}
